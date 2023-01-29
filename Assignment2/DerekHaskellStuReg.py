@@ -19,7 +19,7 @@ lastName=input("Enter last name: ") #get last name as input
 dob=input("Enter date of birth: ") #get dob as input
 print()
 
-print('Welcome! ' + firstName + ' ' + lastName) #welcome user
+print('Welcome ' + firstName + ' ' + lastName + '!') #welcome user
 print()
 
 print("Your registration is complete!") #registration completed sucessful message
