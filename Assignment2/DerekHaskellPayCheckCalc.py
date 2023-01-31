@@ -23,4 +23,4 @@ print("Tax Rate: " + str(taxRate) + '%') #display tax rate
 taxAmount=grossPay*(taxRate/100) #equasion
 print('Tax Amount: $' + "{:.2f}".format(taxAmount)) #display tax amount
 takeHomePay=grossPay-taxAmount #equasion
-print('Take Home Pay: ' + "{:.2f}".format(takeHomePay)) #display take home pay
+print('Take Home Pay: $' + "{:.2f}".format(takeHomePay)) #display take home pay

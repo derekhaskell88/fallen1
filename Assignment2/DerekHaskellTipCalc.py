@@ -12,11 +12,11 @@
 print("Derek Haskell's Tip Calculator App") #app creator
 print()
 
-costOfMeal=float(input('Cost of meal: ')) #taking usser input
+costOfMeal=float(input('Cost of meal: $')) #taking usser input
 tipPercent=float(input('Tip percent: ')) #taking user input
 print()
 
 tipAmount=costOfMeal*(tipPercent/100) #equasion
-print('Tip amount: ' + "{:.2f}".format(tipAmount)) #display tip amount
+print('Tip amount: $' + "{:.2f}".format(tipAmount)) #display tip amount
 totalAmount=costOfMeal+tipAmount #equasion
-print('Total amount: ' + "{:.2f}".format(totalAmount)) #display total amount
+print('Total amount: $' + "{:.2f}".format(totalAmount)) #display total amount

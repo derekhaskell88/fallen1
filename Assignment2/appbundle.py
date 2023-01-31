@@ -47,20 +47,22 @@ while play == "y":
         taxAmount=grossPay*(taxRate/100) #equasion
         print('Tax Amount: $' + "{:.2f}".format(taxAmount)) #display tax amount
         takeHomePay=grossPay-taxAmount #equasion
-        print('Take Home Pay: ' + "{:.2f}".format(takeHomePay)) #display take home pay
+        print('Take Home Pay: $' + "{:.2f}".format(takeHomePay)) #display take home pay
     else:
         print("Derek Haskell's Tip Calculator App") #app creator
         print()
 
-        costOfMeal=float(input('Cost of meal: ')) #taking usser input
+        costOfMeal=float(input('Cost of meal: $')) #taking usser input
         tipPercent=float(input('Tip percent: ')) #taking user input
         print()
 
         tipAmount=costOfMeal*(tipPercent/100) #equasion
-        print('Tip amount: ' + "{:.2f}".format(tipAmount)) #display tip amount
+        print('Tip amount: $' + "{:.2f}".format(tipAmount)) #display tip amount
         totalAmount=costOfMeal+tipAmount #equasion
-        print('Total amount: ' + "{:.2f}".format(totalAmount)) #display total amount
+        print('Total amount: $' + "{:.2f}".format(totalAmount)) #display total amount
     print()
     print("Thank you for using the app bundle!")
-    play=input("Would you like to use another app y/n ")
+    play=input("Would you like to use another app (y/n) ")
     print()
+    print("---------------------------------------------")
+    print() 
