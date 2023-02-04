@@ -17,12 +17,13 @@ hoursWorked = float(input('Hours worked: '))  # taking input from user
 payRate = float(input('Hourly pay rate: '))  # taking input from user
 print()
 
-grossPay = hoursWorked*payRate  # equasion
-print('Gross pay: $' + "{:.2f}".format(grossPay))  # display gross pay
+grossPay = round(hoursWorked*payRate, 2)  # equasion
+print('Gross pay: $' + str(grossPay))  # display gross pay
 taxRate = 18  # set taxrate variable
 print("Tax Rate: " + str(taxRate) + '%')  # display tax rate
 taxAmount = grossPay*(taxRate/100)  # equasion
-print('Tax Amount: $' + "{:.2f}".format(taxAmount))  # display tax amount
-takeHomePay = grossPay-taxAmount  # equasion
+taxAmount = round(taxAmount, 2)
+print('Tax Amount: $' + str(taxAmount))  # display tax amount
+takeHomePay = round(grossPay-taxAmount, 2)  # equasion
 # display take home pay
-print('Take Home Pay: $' + "{:.2f}".format(takeHomePay))
+print('Take Home Pay: $' + str(takeHomePay))

@@ -10,7 +10,7 @@
 # constitutes cheating, and that I will receive a zero on this project
 # if I am found in violation of this policy.
 
-print("Derek Haskell's Tip Calculator App")  # app creator
+print("Derek Haskell's Tip Calculator App")  # welcome message
 print()
 
 costOfMeal = float(input('Cost of meal: $'))  # taking usser input
