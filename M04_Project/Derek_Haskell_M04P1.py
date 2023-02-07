@@ -17,8 +17,9 @@ while choice.lower() == "y":  # starting while loop
     # taking input from user as an integer
     number = int(input("Enter numerical grade: "))
     if number <= 100 and number >= 94:  # create an if statement that will determine the users grade based off of their input
-        print("Letter grade: A")
-    elif number <= 93 and number >= 90:
+        print("Letter grade: A")  # prints if A
+    elif number <= 93 and number >= 90:  # create elif statements that cover the rest of the letter grades
+        # letter grades will print if their value is met
         print("Letter grade: A-")
     elif number <= 89 and number >= 87:
         print("Letter grade: B+")
