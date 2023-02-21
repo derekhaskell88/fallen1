@@ -1,5 +1,8 @@
 # Derek Haskell validation file for the Future Value App
 def get_float(prompt, low, high):  # defining the get float function
+    """
+    validates the user float input and displays message on how to correct
+    """
     while True:  # setting up infinate loop
         number = float(input(prompt))  # setting number variable
         if number > low and number <= high:  # rules for get float function
@@ -10,6 +13,9 @@ def get_float(prompt, low, high):  # defining the get float function
 
 
 def get_int(prompt, low, high):  # defining the get int function
+    """
+    validates the user integer input and displays a message on how to correct
+    """
     while True:  # setting up infinate loop
         number = float(input(prompt))  # setting the number variable
         if number > low and number <= high:  # rules for get int function
@@ -20,6 +26,9 @@ def get_int(prompt, low, high):  # defining the get int function
 
 
 def main():  # defining main function
+    """
+    main function calls the get float and get int functions and asks user if they want to continue
+    """
     choice = "y"  # variable for while loop
     while choice.lower() == "y":  # starting while loop
         # valid range for get float function

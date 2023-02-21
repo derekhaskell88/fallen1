@@ -18,4 +18,4 @@ cost_per_mile = round(total_gas_cost / miles_driven, 2)
 print("Miles Per Gallon:\t\t" + str(mpg))
 print("Total Gas cost:\t\t\t" + str(total_gas_cost))
 print("Cost Per mile:\t\t\t" + str(cost_per_mile))
-print("Bye")
+print("Bye")  # goodbye message

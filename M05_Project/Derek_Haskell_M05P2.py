@@ -13,15 +13,24 @@ import dhconverter as d  # import converter file
 
 
 def fm_welcome():  # define fm_welcome function
+    """
+    welcome message
+    """
     print("Derek Haskell's Feet and Meters Converter")  # welcome message
     print()
 
 
 def fm_menu():  # define menue function
+    """
+    display menu
+    """
     print("Conversions Menu:\n\na. Feet to Meters\nb. Meters to Feet")
 
 
 def main():  # define main function
+    """
+    main function calls functions from dhconverter file
+    """
     fm_welcome()  # run the welcome function inside of the main function
     while True:  # infinate while loop
         fm_menu()  # run the menu function inside of the main function

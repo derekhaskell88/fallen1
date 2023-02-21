@@ -14,6 +14,9 @@ print()
 
 
 def is_even(num):  # define is even function
+    """
+    determines if number is even or odd
+    """
     if num % 2 == 0:  # using modulo to determine if number is even
         return True  # if even returns true
     else:  # elsse statement that will return false if odd
@@ -21,6 +24,9 @@ def is_even(num):  # define is even function
 
 
 def main():  # define main function
+    """
+    main function gets user input and calls is_even function
+    """
     choice = "y"  # variable for while loop
     while choice.lower() == "y":  # start while loop
         print("Derek's even or odd checker")  # welcome message

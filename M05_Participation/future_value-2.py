@@ -6,8 +6,11 @@ print("Derek Haskell's Validated Future Value App")  # welcome message
 print()
 
 
-# define the calculate future value function
+# define and calculate future value function
 def calculate_future_value(monthly_investment, yearly_interest, years):
+    """
+    calculates future value based on user input
+    """
     monthly_interest_rate = yearly_interest / 12 / \
         100  # equasion for monthly interest rate
     months = int(years * 12)  # finding number of months
@@ -23,6 +26,9 @@ def calculate_future_value(monthly_investment, yearly_interest, years):
 
 
 def main():  # define the main function
+    """
+    main function used to get user input for monthly investment as a float and yearly interest as an integer uses validate file
+    """
     choice = "y"  # setting up while loop variable
     while choice.lower() == "y":  # starting while loop
         # get input from the user and invorperating the validate file with v.get_float and v.get_int

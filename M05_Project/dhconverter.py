@@ -10,10 +10,16 @@
 # if I am found in violation of this policy.
 
 def to_meters(feet):  # define feet to meters conversion function
+    """
+    converts feet to meters
+    """
     meters = feet * 0.3048  # eauasion for feet to meters
     return meters  # returns value for equasion
 
 
 def to_feet(meters):  # define meters to feet conversion function
+    """
+    converts meters to feet
+    """
     feet = meters / 0.3048  # equasion for meters to feet
     return feet  # returns value for equasion
