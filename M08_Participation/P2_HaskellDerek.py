@@ -16,7 +16,12 @@ from tkinter import ttk  # get ttk from tkinter
 
 class mathExam:  # main class only class
     def __init__(self, parent):  # initiate self and parent
+        """
+        initiate
 
+        Args:entry box and grade button
+            parent (_type_): _description_
+        """
         self.question_label = ttk.Label(
             parent, text="What is the cube root of 64?")  # create label and display text
         self.question_label.pack()  # pack and format
@@ -33,6 +38,9 @@ class mathExam:  # main class only class
         self.response_label.pack()  # format
 
     def grade_question(self):  # grades question
+        """
+        grades question
+        """
         answer = self.answer_entry.get()  # get variable
         if answer == "4":  # check value
             response = "Correct!"  # correct answer
