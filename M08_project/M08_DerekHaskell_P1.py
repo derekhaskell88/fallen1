@@ -4,7 +4,7 @@
 # Section: (X01)
 # Professor: (Crandall)
 # Date: 3/25/23
-# Project #: M08 project right triangle calculator
+# Project #: M08 project part 1 right triangle calculator
 # I declare that the source code contained in this assignment was written solely by me.
 # I understand that copying any source code, in whole or in part,
 # constitutes cheating, and that I will receive a zero on this project
