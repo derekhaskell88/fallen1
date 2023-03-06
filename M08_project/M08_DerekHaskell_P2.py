@@ -33,6 +33,9 @@ class geometry_calculator(ttk.Frame):
             row=2, column=1)  # create button for exiting application
 
     def exit_app(self):  # define command for exit button
+        """
+        exits app
+        """
         root.destroy()  # destroys root window
 
 
@@ -58,6 +61,9 @@ class triangle_calculator(ttk.Frame):  # the triangle calculator class
         self.results.grid(row=5, column=0)  # format grid
 
     def calculate_hypotenuse(self):  # define the function to calculate hypotenuse
+        """
+        calculates hypotenuse of a right triangle
+        """
         a = float(self.side_a.get())  # get user input and float it
         b = float(self.side_b.get())  # get user input and float it
         self.message = "Number must be greater than zero"  # setting error message
@@ -74,6 +80,9 @@ class triangle_calculator(ttk.Frame):  # the triangle calculator class
         self.results.config(text="The hypotenuse is " + str(c))
 
     def clear(self):  # making clear command to clear text
+        """
+        clears user input and results from calculations
+        """
         self.side_a.delete(0, tk.END)  # clear a
         self.side_b.delete(0, tk.END)  # clear b
         self.results.config(text="")  # clear results
@@ -107,6 +116,9 @@ class cylinder_calculator(ttk.Frame):  # cylincer calculator frame
         self.volume.grid(row=6, column=0)  # format grid
 
     def calculate(self):  # define calculate function
+        """
+        calculates circumference and volume if user inputs heighth and diameter
+        """
         diameter = float(self.diameter.get())  # get user input
         heighth = float(self.heighth.get())  # get user input
         self.message = "Number must be greater than 0"  # set message for invalid entry
@@ -125,6 +137,9 @@ class cylinder_calculator(ttk.Frame):  # cylincer calculator frame
         self.volume.config(text="Volume = " + str(volume))
 
     def clear(self):  # define clear button function
+        """
+        clears user input and results from calculations
+        """
         self.circumference.config(text="")  # clears results
         self.volume.config(text="")  # clears volume results
         self.diameter.delete(0, tk.END)  # clears text

@@ -50,6 +50,9 @@ class triangleCalculator(ttk.Frame):  # create trianglecalculator class
         self.results.grid(row=5, column=0)  # format
 
     def calculate_hypotenuse(self):  # define function for calculate
+        """
+        calculates hypotenuse of a right triangle taking user input for side a and b
+        """
         a = float(self.side_a.get())  # get and float user input
         b = float(self.side_b.get())  # get and float user input
         self.message = "Number must be greater than zero"  # declare error message
@@ -66,11 +69,17 @@ class triangleCalculator(ttk.Frame):  # create trianglecalculator class
         self.results.config(text="The hypotenuse is " + str(c))
 
     def clear(self):  # define clear function
+        """
+        clears user text and response from calculations
+        """
         self.side_a.delete(0, tk.END)  # deletes entry a
         self.side_b.delete(0, tk.END)  # deletes entry b
         self.results.config(text="")  # deletes results
 
     def exit_app(self):  # define exit app function
+        """
+        exits application
+        """
         root.destroy()  # destroys root window
 
 
