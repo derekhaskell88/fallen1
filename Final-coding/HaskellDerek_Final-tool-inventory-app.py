@@ -163,7 +163,7 @@ def total_value(tools):  # define total value function
         float(tools[3][1])+float(tools[4][1]) + \
         float(tools[5][1])  # calculates total
     print("\nYour Inventory is worth $", round(
-        worth, 2))  # display total worth
+        worth, 3))  # display total worth round to three decimal places if its possible for that to happen
 
 
 if __name__ == "__main__":  # if main is present run main function as main
