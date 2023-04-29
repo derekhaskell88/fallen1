@@ -162,7 +162,8 @@ def total_value(tools):  # define total value function
     worth = float(tools[0][1])+float(tools[1][1])+float(tools[2][1]) + \
         float(tools[3][1])+float(tools[4][1]) + \
         float(tools[5][1])  # calculates total
-    print("\nYour Inventory is worth $", worth)  # display total worth
+    print("\nYour Inventory is worth $", round(
+        worth, 2))  # display total worth
 
 
 if __name__ == "__main__":  # if main is present run main function as main
