@@ -159,9 +159,9 @@ def edit_price(tools):  # define edit price function with tools as argument
 
 def total_value(tools):  # define total value function
     """calculates total value of inventory"""
-    worth = float(tools[0][1])+float(tools[1][1])+float(tools[2][1]) + \
-        float(tools[3][1])+float(tools[4][1]) + \
-        float(tools[5][1])  # calculates total
+    worth = (float(tools[0][1])*int(tools[0][2]))+(float(tools[1][1])*int(tools[1][2]))+(float(tools[2][1])*int(tools[2][2])) +\
+        (float(tools[3][1])*int(tools[3][2]))+(float(tools[4][1])*int(tools[4]
+                                                                      [2]))+(float(tools[5][1])*int(tools[5][2]))  # calculates total
     print("\nYour Inventory is worth $", round(
         worth, 3))  # display total worth round to three decimal places if its possible for that to happen
 
