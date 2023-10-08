@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#this is untested code I'm unsure how it will run I will be creating a virtual machine to test it asap
 # Specify the directory to start the search from
 start_dir="/"
 
