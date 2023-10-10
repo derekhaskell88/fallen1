@@ -1,4 +1,6 @@
 #!/bin/bash
+
+timestamp=$(date +"%H-%M")
 if [ $# -ne 2 ]; then
   echo -e "\e[31mUsage:\e[0m $0 <file1> <file2>"
   exit 1
@@ -23,6 +25,9 @@ sha256_file2=$(sha256sum "$file2" | awk '{print $1}')
 if [ "$sha256_file1" == "$sha256_file2" ]; then
   echo -e "\e[32mSHA-256 sums match:\e[0m '$file1' and '$file2'"
 else
-  echo -e "\e[31mSHA-256 sums do not match:\e[0m '$file1' and '$file2'"
+  echo -e "\e[31mSHA-256 sums do not match on:\e[0m '$file1' and '$file2'"
+  differences=$(diff "$file1" "$file2")
+  echo -e "\e[31mDifferences: "
+  echo -e "$differences\e[0m"
+  echo "$differences" > "whatdiff-$timestamp.txt"
 fi
-

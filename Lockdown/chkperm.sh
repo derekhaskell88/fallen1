@@ -8,6 +8,9 @@ locations=(
     "/etc/crontab"
     "/var/spool/cron/crontabs"
     "/etc/group"
+    "/etc/hosts"
+    "/etc/resolv.conf"
+    "/home"
 )
 
 timestamp=$(date +"%H-%M")
