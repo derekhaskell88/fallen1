@@ -1,4 +1,5 @@
 #!/bin/bash
+# run as root
 
 locations=(
     "/etc/shadow"
@@ -27,9 +28,9 @@ for location in "${locations[@]}"; do
     if [ -e "$location" ]; then
         check_permissions "$location"
     else
-        echo "$location does not exist" >> "$report_file"
+        echo -e "\e[31m$location does not exist\e[0m" >> "$report_file"
         echo -e "\n" >> "$report_file"
     fi
 done
 
-echo "Permission check completed. Report saved as $report_file"
+echo -e "\e[32mPermission check completed. Report saved as $report_file\e[0m"
