@@ -6,17 +6,22 @@
 # Flush existing rules and user defined chains
 iptables -F; iptables -X
 
-# SSH
+# SSH (trusted or not?)
+#iptables -A INPUT -p tcp --dport 22 -s trusted_ip1 -j ACCEPT
+#iptables -A INPUT -p tcp --dport 22 -s trusted_ip2 -j ACCEPT
+
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT
-#iptables -A OUTPUT -p tcp --dport 22 -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 22 -j ACCEPT
 
-#  established and related incoming connections
-iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-#iptables -A INPUT -m conntrack --cstate ESTABLISHED,RELATED -j ACCEPT
-#iptables -A OUTPUT -m conntrack --cstate ESTABLISHED,RELATED -j ACCEPT
+# established and related connections
+#iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+#iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -m conntrack --cstate ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -m conntrack --cstate ESTABLISHED,RELATED -j ACCEPT
 
-#  DNS
+#  DNS (trusted or not?)
+#iptables -A INPUT -p udp --dport 53 -s trusted_ip1 -j ACCEPT
+#iptables -A OUTPUT -p udp --dport 53 -s trusted_ip1 -j ACCEPT
 iptables -A INPUT -p udp --dport 53 -j ACCEPT
 iptables -A OUTPUT -p udp --dport 53 -j ACCEPT
 
@@ -26,19 +31,28 @@ iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
 iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
 
-# FTP
-#iptables -A INPUT -p tcp --dport ? -j ACCEPT
-#iptables -A OUTPUT -p tcp --dport ? -j ACCEPT
+# FTP (trusted or not trusted)
+#iptables -A INPUT -p tcp --dport 21 -s trusted_ip1 -j ACCEPT
+#iptables -A OUTPUT -p tcp --dport 21 -s trusted_ip1 -j ACCEPT
+iptables -A INPUT -p tcp --dport 21 -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 21 -j ACCEPT
+
+# MySQL (trusted or not trusted)
+#iptables -A INPUT -p tcp --dport 3306 -s db_server_ip1 -j ACCEPT
+#iptables -A OUTPUT -p tcp --dport 3306 -s db_server_ip2 -j ACCEPT
+iptables -A INPUT -p tcp --dport 3306 -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 3306 -j ACCEPT
 
 # Whitelist (use principal of least privilege)
-#sudo iptables -A INPUT -s 192.168.1.100 -j ACCEPT
-#sudo iptables -A INPUT -s 192.168.1.101 -j ACCEPT
+#sudo iptables -A INPUT -s trusted-ip -j ACCEPT
+#sudo iptables -A INPUT -s trusted-ip -j ACCEPT
 
 # Blacklist
-#sudo iptables -A INPUT -s 192.168.1.100 -j DROP
-#sudo iptables -A INPUT -s 192.168.1.101 -j DROP
+#sudo iptables -A OUTPUT -s not-trustedip -j DROP
+#sudo iptables -A INPUT -s not-trustedip -j DROP
 
 #ICMP
+iptables -A INPUT -p icmp -j ACCEPT
 #iptables -A INPUT -p icmp -s <insert ip range here> -j ACCEPT
 #iptables -A INPUT -p icmp -j DROP
 
@@ -72,7 +86,7 @@ iptables-save > /etc/iptables/rules.v4 #is this the right spot to save this? nee
 systemctl restart iptables
 
 # Success message 
-echo -e "\e[32mFirewall rules configured and restarted.\e[0m"
+echo  "Firewall rules configured and restarted."
 
 
 

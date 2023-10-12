@@ -13,4 +13,5 @@ sudo apt-get install iptables-persistent
 
 
 what are we going to do with ipv6????????
+
 cat /var/log/syslog
