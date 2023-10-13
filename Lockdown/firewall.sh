@@ -6,20 +6,22 @@
 # Flush existing rules and user defined chains
 iptables -F; iptables -X
 
-# SSH (trusted or not?)
+# SSH (trusted)
 #iptables -A INPUT -p tcp --dport 22 -s trusted_ip1 -j ACCEPT
 #iptables -A INPUT -p tcp --dport 22 -s trusted_ip2 -j ACCEPT
 
+# SSH
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT
 iptables -A OUTPUT -p tcp --dport 22 -j ACCEPT
 
-# established and related connections
-#iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-#iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-iptables -A INPUT -m conntrack --cstate ESTABLISHED,RELATED -j ACCEPT
-iptables -A OUTPUT -m conntrack --cstate ESTABLISHED,RELATED -j ACCEPT
+# established and related connections(i couldn't get cstate to work on my ubuntu server)
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+#iptables -A INPUT -m conntrack --cstate ESTABLISHED,RELATED -j ACCEPT
+#iptables -A OUTPUT -m conntrack --cstate ESTABLISHED,RELATED -j ACCEPT
 
-#  DNS (trusted or not?)
+
+# DNS
 #iptables -A INPUT -p udp --dport 53 -s trusted_ip1 -j ACCEPT
 #iptables -A OUTPUT -p udp --dport 53 -s trusted_ip1 -j ACCEPT
 iptables -A INPUT -p udp --dport 53 -j ACCEPT
@@ -31,19 +33,19 @@ iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
 iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
 
-# FTP (trusted or not trusted)
+# FTP (trusted)
 #iptables -A INPUT -p tcp --dport 21 -s trusted_ip1 -j ACCEPT
 #iptables -A OUTPUT -p tcp --dport 21 -s trusted_ip1 -j ACCEPT
 iptables -A INPUT -p tcp --dport 21 -j ACCEPT
 iptables -A OUTPUT -p tcp --dport 21 -j ACCEPT
 
-# MySQL (trusted or not trusted)
+# MySQL (trusted)
 #iptables -A INPUT -p tcp --dport 3306 -s db_server_ip1 -j ACCEPT
 #iptables -A OUTPUT -p tcp --dport 3306 -s db_server_ip2 -j ACCEPT
 iptables -A INPUT -p tcp --dport 3306 -j ACCEPT
 iptables -A OUTPUT -p tcp --dport 3306 -j ACCEPT
 
-# Whitelist (use principal of least privilege)
+# Whitelist 
 #sudo iptables -A INPUT -s trusted-ip -j ACCEPT
 #sudo iptables -A INPUT -s trusted-ip -j ACCEPT
 
@@ -53,6 +55,7 @@ iptables -A OUTPUT -p tcp --dport 3306 -j ACCEPT
 
 #ICMP
 iptables -A INPUT -p icmp -j ACCEPT
+iptables -A OUTPUT -p icmp -j ACCEPT
 #iptables -A INPUT -p icmp -s <insert ip range here> -j ACCEPT
 #iptables -A INPUT -p icmp -j DROP
 
@@ -65,7 +68,7 @@ iptables -P INPUT DROP
 iptables -P FORWARD DROP
 iptables -P OUTPUT DROP
 
-# Logged traffic is stored in /var/log/syslog
+# Logged traffic is stored in /var/log/syslog, do we need to log outbount traffic?
 iptables -A INPUT -j LOG --log-prefix "Denied: "
 iptables -A OUTPUT -j LOG --log-prefix "Denied: "
 iptables -A INPUT -j LOG --log-prefix "Forwarded: "
@@ -80,13 +83,13 @@ iptables -A OUTPUT -j LOG --log-prefix "Intrusion: "
 
 
 # Save the rules to make them persistent
-iptables-save > /etc/iptables/rules.v4 #is this the right spot to save this? needs practice to make sure this works!
+iptables-save > /etc/iptables/rules.v4 
 
 # Restart the firewall service 
 systemctl restart iptables
 
 # Success message 
 echo  "Firewall rules configured and restarted."
-
+echo 'Rules have been saved to /etc/iptables/rules.v4'
 
 

@@ -4,14 +4,16 @@ nameserver 8.8.8.8  # Primary DNS server
 nameserver 8.8.4.4  # Secondary DNS server
 
 sudo systemctl restart networking    # On Ubuntu/Debian
-# or
-sudo systemctl restart network      # On CentOS/Fedora
 
+sudo install iptables-persistent
 
-sudo apt-get install iptables-persistent
+sudo apt install sshguard
+#configure ssh guard with 
+sudo nano /etc/sshguard/sshguard.conf
+
 
 
 
 what are we going to do with ipv6????????
 
-cat /var/log/syslog
+tail -F /var/log/syslog
