@@ -1,0 +1,243 @@
+--Big Teeth Queries
+
+exec highest_rated --q1 
+exec top_points --q2
+exec top_votes --q3
+exec non_qualifiers --q4
+exec episode_length --q5
+exec docs_against_teeth --q6
+select * from on_meds --q7
+select * from off_meds --q8
+exec level_of_knowledge --q9
+exec astronomical_insurance --q10
+select * from view_death --q11
+
+--Q1 Highest Rated
+create proc highest_rated
+as
+select top 10 
+a.Fname+' '+a.Lname as 'Full Name', 
+app.AppearanceRating as 'Appearance Rating',
+app.DirectorRating as 'Director Rating',
+app.ProducerRating as 'Producer Rating',
+app.AppearanceRating+app.DirectorRating+app.ProducerRating as 'Total Rating' 
+from Applicant a
+join Applications app on a.ApplicantID=app.ApplicantID
+order by 'Total Rating' desc;
+
+--Q2 Top Points
+create proc top_points
+as
+select top 25 
+a.Fname+' '+a.Lname as 'Full Name',
+a.Nation as 'Hails From',
+sum(points) as 'Total Points',
+count(*)/2 as 'Number of Episodes'
+from Contestant c
+join Applicant a on c.ApplicantID=a.ApplicantID
+group by c.ApplicantID,a.Fname,a.Lname,a.Nation
+order by 'Total Points' desc;
+
+--Q3 Top Votes
+create proc top_votes
+as
+select top 25 
+a.Fname+' '+a.Lname as 'Full Name',
+a.Nation as 'Hails From',
+sum(votecount) as 'Total Votes',
+r.Outcome as 'What the people want'
+from Contestant c
+join Applicant a on c.ApplicantID=a.ApplicantID
+join ResultLookup r on c.ResultID=r.ResultID 
+group by c.ApplicantID,a.Fname,a.Lname,a.Nation,r.Outcome
+order by 'Total Votes' desc;
+
+--Q4 Non Qualifiers
+create proc non_qualifiers
+as
+select a.Fname + ', ' + a.Lname as 'Full Name',
+a.Nation,
+ec.EducationLevel, crim.FelonyYN as 'Felony (y/n)',
+app.ProducerRating+app.DirectorRating as 'Total Score',
+ep.EthosRating as 'Ethos Rating'
+from Applicant a 
+left join Contestant c on a.ApplicantID=c.ApplicantID
+join EducationCheck ec on a.ApplicantID=ec.ApplicantID
+join Applications app on a.ApplicantID=app.ApplicantID
+join EmploymentCheck ep on a.ApplicantID=ep.ApplicantID
+join CriminalCheck crim on a.ApplicantID=crim.ApplicantID
+where c.ApplicantID is null
+order by 'Total Score' desc;
+
+--Q5 Episode Lengths
+create proc episode_length
+as
+select sum(EstTime) as 'Time',
+ev.AirDate 'Date Aired',
+e.Title
+from EpisodeEvent ev
+join Episode e on ev.AirDate=e.AirDate
+group by ev.AirDate, e.Title
+order by ev.AirDate desc;
+
+--Q6
+create proc docs_against_teeth
+as
+select a.Fname+' '+a.Lname as 'Full Name',
+a.Nation as 'Hails From',
+el.Details as 'Education Details',
+ev.Animal as 'Opponent',
+r.Outcome as 'What Happened'
+from Applicant a
+join EducationCheck ec on a.ApplicantID=ec.ApplicantID
+join EduLookup el on ec.EducationLevel=el.EducationLevel
+join Contestant c on a.ApplicantID=c.ApplicantID
+join EpisodeEvent ev on c.EventID=ev.EventID
+join ResultLookup r on c.ResultID=r.ResultID
+where ec.EducationLevel=6;
+
+--Q7 View Applicants on Meds
+create view on_meds
+as
+select a.Fname + ', ' + a.Lname as 'Full Name',
+mc.DrugName as 'Drugs',
+m.Reason as 'Reason for Drug'
+from Applicant a
+join Medication m on a.ApplicantID=m.ApplicantID
+join Medicine mc on m.MedicineID=mc.MedicineID;
+
+--Q8 View Applicants off Meds
+create view off_meds
+as
+select a.Fname + ', ' + a.Lname as 'Full Name'
+from Applicant a
+left join Medication m on a.ApplicantID=m.ApplicantID
+where m.ApplicantID is null;
+
+--Q9 Union Level Of Knowledge
+create proc level_of_knowledge
+as
+select a.Fname+' '+a.Lname as 'Full Name',
+a.Nation as 'Hails From',
+el.Details as 'Degree',
+ec.EducationLevel as 'Education Level',
+'10th Dimentional Being' as 'Level of Knowledge'
+from EducationCheck ec
+join EduLookup el on ec.EducationLevel=el.EducationLevel
+join Applicant a on ec.ApplicantID=a.ApplicantID
+where ec.EducationLevel=6
+union
+select a.Fname+' '+a.Lname as 'Full Name',
+a.Nation as 'Hails From',
+el.Details as 'Degree',
+ec.EducationLevel as 'Education Level',
+'Sorcerer' as 'Level of Knowledge'
+from EducationCheck ec
+join EduLookup el on ec.EducationLevel=el.EducationLevel
+join Applicant a on ec.ApplicantID=a.ApplicantID
+where ec.EducationLevel=5
+union
+select a.Fname+' '+a.Lname as 'Full Name',
+a.Nation as 'Hails From',
+el.Details as 'Degree',
+ec.EducationLevel as 'Education Level',
+'Wizard' as 'Level of Knowledge'
+from EducationCheck ec
+join EduLookup el on ec.EducationLevel=el.EducationLevel
+join Applicant a on ec.ApplicantID=a.ApplicantID
+where ec.EducationLevel=4
+union
+select a.Fname+' '+a.Lname as 'Full Name',
+a.Nation as 'Hails From',
+el.Details as 'Degree', 
+ec.EducationLevel as 'Education Level',
+'Apprentice' as 'Level of Knowledge'
+from EducationCheck ec
+join EduLookup el on ec.EducationLevel=el.EducationLevel
+join Applicant a on ec.ApplicantID=a.ApplicantID
+where ec.EducationLevel=3
+union
+select a.Fname+' '+a.Lname as 'Full Name',
+a.Nation as 'Hails From',
+el.Details as 'Degree', 
+ec.EducationLevel as 'Education Level',
+'Discovered Powers' as 'Level of Knowledge'
+from EducationCheck ec
+join EduLookup el on ec.EducationLevel=el.EducationLevel
+join Applicant a on ec.ApplicantID=a.ApplicantID
+where ec.EducationLevel=2
+union
+select a.Fname+' '+a.Lname as 'Full Name',
+a.Nation as 'Hails From',
+el.Details as 'Degree',
+ec.EducationLevel as 'Education Level',
+'Unaware of Powers' as 'Level of Knowledge'
+from EducationCheck ec
+join EduLookup el on ec.EducationLevel=el.EducationLevel
+join Applicant a on ec.ApplicantID=a.ApplicantID
+where ec.EducationLevel=1
+union
+select a.Fname+' '+a.Lname as 'Full Name',
+a.Nation as 'Hails From',
+el.Details as 'Degree',
+ec.EducationLevel as 'Education Level',
+'Late Bloomer' as 'Level of Knowledge'
+from EducationCheck ec
+join EduLookup el on ec.EducationLevel=el.EducationLevel
+join Applicant a on ec.ApplicantID=a.ApplicantID
+where ec.EducationLevel=0
+order by ec.EducationLevel desc;
+
+--Q10 Astranomical Insurance Fees
+create proc astronomical_insurance
+as
+select e.AirDate as 'Date Aired', e.Title,
+sum(mc.InsuranceFee) as 'Medication Fee',
+sum(c.InsuranceFee) as 'Contestant Fee',
+sum(v.InsuranceFee) as 'Event Fee',
+sum(mc.InsuranceFee)+sum(c.InsuranceFee)+sum(v.InsuranceFee) as 'Total Fee'
+from Episode e
+join EpisodeEvent v on e.AirDate=v.AirDate
+join Contestant c on v.EventID=c.EventID
+join Medication m on c.ApplicantID=m.ApplicantID
+join Medicine mc on m.MedicineID=mc.MedicineID
+group by e.AirDate,e.Title
+order by 'Total Fee' desc;
+
+
+--Q11 View_Death
+create view view_death
+as
+select a.Fname+' '+a.Lname as 'Full Name',
+a.Nation as 'Hails From',
+ev.Animal as 'Opponent',
+r.Outcome as 'What Happened'
+from Applicant a
+join Contestant c on a.ApplicantID=c.ApplicantID
+join EpisodeEvent ev on c.EventID=ev.EventID
+join ResultLookup r on c.ResultID=r.ResultID
+where c.ResultID=6;
+
+--Q12 Trigger applicant check
+create trigger trig_applicantcheck
+on contestant
+instead of insert,update
+as
+if not exists(
+select * from inserted i
+where (select felonyyn from criminalcheck cc where i.ApplicantID=cc.ApplicantID)='N'
+and (select educationlevel from educationcheck ec where i.ApplicantID=ec.ApplicantID)>=1
+and (select recentemployer from employmentcheck ep where i.ApplicantID=ep.ApplicantID) is not null
+and (select appearancerating+producerrating+directorrating from Applications a where i.ApplicantID=a.ApplicantID)>=15
+)
+print 'Applicant Does Not Qualify'
+else
+insert into contestant
+select * from inserted;
+
+
+
+
+
+
+

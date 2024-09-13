@@ -1,0 +1,53 @@
+insert into Applicant values('AAAAAAAA','Derek','Haskell','400 E 900 N','American Fork','UT','84003','8017564449','8017454448','derek@derek.com','1988-03-31','Male','United States');
+insert into Applicant values('BBBBBBBB','Elliot','Alderson','900 E 400 N','New York','NY','84003','8017568888','8017459999','elliot@mrrobot.com','2000-03-31','Male','United States');
+GO
+insert into criminalcheck values('AAAAAAAA','N','Y'); 
+insert into criminalcheck values('BBBBBBBB','N','Y');
+GO
+insert into educationcheck values('AAAAAAAA',5,'professor@school.com'); 
+insert into educationcheck values('BBBBBBBB',5,'tyrell@evilcorp.com');
+GO
+insert into employmentcheck values('AAAAAAAA','Boart Longyear','7777777777','virtuous');
+insert into employmentcheck values('BBBBBBBB',null,'8888888888','hacktivist'); --this is the dropout
+insert into episode values('2023-01-01','Jigsaw','Amanda','SAW with Big Teeth');
+GO
+insert into EpisodeEvent values('FFFFFFFF','2023-01-01','Reverse Bear Traps',8,6);
+insert into EpisodeEvent values('GGGGGGGG','2023-01-01','Ice Room',9,9);
+GO
+insert into contestant values('34099376 ','GGGGGGGG',100,1000,'Death'); --felon
+insert into contestant values('21490260 ','GGGGGGGG',100,1000,'Death'); --dropout
+insert into contestant values('AAAAAAAA ','FFFFFFFF',0,0,'Death'); --normal qualifier
+insert into contestant values('BBBBBBBB ','GGGGGGGG',0,0,'Death'); --no job
+GO
+insert into applications values('AAAAAAAA','Kali Linux is the best OS',null,'ZZZZZZZZ',9,9,9)
+insert into applications values('BBBBBBBB','The top one percent of the one percent run the world',null,'QQQQQQQQ',9,9,9)
+
+
+delete contestant where eventid = 'FFFFFFFF'
+delete contestant where eventid = 'GGGGGGGG'
+drop trigger trig_applicantcheck;
+
+--Trigger applicant check
+create trigger trig_applicantcheck
+on contestant
+instead of insert,update
+as
+if not exists(
+select * from inserted i
+where (select felonyyn from criminalcheck cc where i.ApplicantID=cc.ApplicantID)='N'
+and (select educationlevel from educationcheck ec where i.ApplicantID=ec.ApplicantID)>=1
+and (select recentemployer from employmentcheck ep where i.ApplicantID=ep.ApplicantID) is not null
+and (select appearancerating+producerrating+directorrating from Applications a where i.ApplicantID=a.ApplicantID)>=15
+)
+print 'Applicant Does Not Qualify'
+else
+insert into contestant
+select * from inserted;
+
+
+	
+
+
+
+
+

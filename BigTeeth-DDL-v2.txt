@@ -1,0 +1,134 @@
+-- Big Teeth DDL
+
+CREATE TABLE ResultLookup(
+ResultID			INT,
+Outcome			VarChar(50),
+PRIMARY KEY(ResultID)
+);
+
+CREATE TABLE Applicant(
+ApplicantID		Char(8),
+Fname			VarChar(30) NOT NULL,
+Lname			VarChar(30) NOT NULL,
+AppAddress		VarChar(30) NOT NULL,
+City				VarChar(30) NOT NULL,
+AppState			Char(2) NOT NULL,
+Zip				Char(5) NOT NULL,
+DayPhone		Char(10) NOT NULL,
+NightPhone		Char(10),
+Email			VarChar(30) NOT NULL,
+DOB				Date NOT NULL,
+Gender			VarChar(10),
+Nation			VarChar(30) NOT NULL,
+PRIMARY KEY(ApplicantID)
+);
+
+CREATE TABLE Episode(
+AirDate			Date,
+Producer			VarChar(30),
+Director			VarChar(30) NOT NULL,
+Title				VarChar(50) NOT NULL,
+PRIMARY KEY(AirDate)
+);
+
+CREATE TABLE EduLookup(
+EducationLevel	INT,
+Details			VarChar(30),
+PRIMARY KEY(EducationLevel)
+);
+
+CREATE TABLE EducationCheck(
+ApplicantID		Char(8),
+EducationLevel	INT NOT NULL CHECK(EducationLevel BETWEEN 0 AND 6),
+ContactEmail		VarChar(50) NOT NULL,
+PRIMARY KEY(ApplicantID),
+FOREIGN KEY(EducationLevel) REFERENCES EduLookup(EducationLevel),
+FOREIGN KEY(ApplicantID) REFERENCES Applicant(ApplicantID)
+);
+
+CREATE TABLE CriminalCheck(
+ApplicantID		Char(8),
+FelonyYN			Char(1) NOT NULL,
+MisdomeanorYN	Char(1) NOT NULL,
+PRIMARY KEY(ApplicantID),
+FOREIGN KEY(ApplicantID) REFERENCES Applicant(ApplicantID)
+);
+
+CREATE TABLE EmploymentCheck(
+ApplicantID		Char(8),
+RecentEmployer	VarChar(30),
+Phone			Char(10) NOT NULL,
+EthosRating		VarChar(100) NOT NULL,
+PRIMARY KEY(ApplicantID),
+FOREIGN KEY(ApplicantID) REFERENCES Applicant(ApplicantID)
+);
+
+CREATE TABLE Applications(
+ApplicantID		Char(8),
+Essay			VarChar(250) NOT NULL,
+Photo			Image,
+VideoID			Char(8),
+AppearanceRating	INT NOT NULL CHECK(AppearanceRating BETWEEN 0 AND 10),
+ProducerRating	INT NOT NULL CHECK(ProducerRating BETWEEN 0 AND 10),
+DirectorRating		INT NOT NULL CHECK(DirectorRating BETWEEN 0 AND 10),
+PRIMARY KEY(ApplicantID),
+FOREIGN KEY(ApplicantID) REFERENCES Applicant(ApplicantID)
+);
+
+CREATE TABLE Medicine(
+MedicineID		Char(8),
+DrugName		VarChar(50) NOT NULL,
+MainSideEffect	VarChar(50) NOT NULL,
+InsuranceFee		Money,
+PRIMARY KEY(MedicineID)
+);
+
+CREATE TABLE Medication(
+MedicineID	Char(8),
+ApplicantID	Char(8),
+Reason		VarChar(100),
+PRIMARY KEY(MedicineID, ApplicantID),
+FOREIGN KEY(MedicineID) REFERENCES Medicine(MedicineID),
+FOREIGN KEY(ApplicantID) REFERENCES Applicant(ApplicantID)
+);
+
+CREATE TABLE EpisodeEvent(
+EventID		Char(8),
+AirDate		Date,
+Animal	VarChar(50) NOT NULL,
+EstTime		INT NOT NULL,
+EstDanger	Char(1) NOT NULL,
+InsuranceFee		Money,
+PRIMARY KEY(EventID),
+FOREIGN KEY(AirDate) REFERENCES Episode(AirDate)
+);
+
+CREATE TABLE Contestant(
+ApplicantID	Char(8),
+EventID		Char(8),
+Points		INT,
+VoteCount	INT,
+ResultID		INT,
+InsuranceFee		Money,
+PRIMARY KEY(ApplicantID, EventID),
+FOREIGN KEY(ApplicantID) REFERENCES Applicant(ApplicantID),
+FOREIGN KEY(EventID) REFERENCES EpisodeEvent(EventID),
+FOREIGN KEY(ResultID) REFERENCES ResultLookup(ResultID)
+);
+
+CREATE TABLE EventAction(
+SequenceID	Char(8),
+EventID		Char(8),
+Descript		VarChar(100) NOT NULL,
+Camera		VarChar(10) NOT NULL,
+EstTime		INT NOT NULL,
+Task			VarChar(10) NOT NULL,
+PRIMARY KEY(SequenceID),
+FOREIGN KEY(EventID) REFERENCES EpisodeEvent(EventID)
+);
+
+
+
+
+
+

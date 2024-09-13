@@ -1,0 +1,13 @@
+DROP TABLE EventAction;
+DROP TABLE Contestant;
+DROP TABLE EpisodeEvent;
+DROP TABLE Medication;
+DROP TABLE Medicine;
+DROP TABLE EducationCheck;
+DROP TABLE EduLookup;
+DROP TABLE CriminalCheck;
+DROP TABLE EmploymentCheck;
+DROP TABLE Episode;
+DROP TABLE Applications;
+DROP TABLE Applicant;
+DROP TABLE ResultLookup
