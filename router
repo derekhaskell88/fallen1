@@ -1,0 +1,41 @@
+#!/sbin/openrc-run
+
+description="Simple Router Service"
+
+depend() {
+    need net
+}
+
+start() {
+    ebegin "Setting up the router"
+
+    # Enable IP forwarding
+    echo 1 > /proc/sys/net/ipv4/ip_forward
+
+    # Set up NAT (replace eth0 with your WAN interface)
+    iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+
+    # Allow forwarding (replace eth0 and eth1 with your WAN and LAN interfaces)
+    iptables -A FORWARD -i eth1 -o eth0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+    iptables -A FORWARD -i eth0 -o eth1 -j ACCEPT
+
+    eend $?
+}
+
+stop() {
+    ebegin "Stopping the router"
+
+    # Disable IP forwarding
+    echo 0 > /proc/sys/net/ipv4/ip_forward
+
+    # Clear NAT and FORWARD rules
+    iptables -t nat -F POSTROUTING
+    iptables -F FORWARD
+
+    eend $?
+}
+
+restart() {
+    svc_stop
+    svc_start
+}
